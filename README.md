@@ -323,7 +323,7 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 - [Pollinations.ai](https://pollinations.ai) - AI generation API
 - [CustomTkinter](https://github.com/TomSchimansky/CustomTkinter) - Modern UI library
-- [AI Chat Hub](https://t.me/+SSC4B1Dnrlc2ZTky) - Community & Support
+- [AI Chat Hub](https://t.me/+SSC4B1Dnrlc2ZTky) - Community & Support (Russian-speaking)
 
 ---
 
