@@ -74,12 +74,24 @@ Generate images, videos, and chat with AI models - all in one beautiful interfac
 
 ## Installation
 
-### Prerequisites
+### Standalone EXE (Windows) - Easiest!
+
+**No Python required!** Just download and run:
+
+1. Go to [Releases](https://github.com/doctorm333/pollinations-manager/releases)
+2. Download `Pollinations.Manager.exe`
+3. Run it!
+
+---
+
+### From Source (requires Python)
+
+#### Prerequisites
 
 - **Python 3.10 or higher** - [Download Python](https://www.python.org/downloads/)
   > Make sure to check **"Add Python to PATH"** during installation!
 
-### Quick Install (Windows)
+#### Quick Install (Windows)
 
 1. **Download or clone the repository:**
    ```bash

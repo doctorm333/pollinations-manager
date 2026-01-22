@@ -41,3 +41,9 @@ logs/
 .pytest_cache/
 .coverage
 htmlcov/
+
+# PyInstaller
+build/
+dist/
+*.spec.bak
+*.exe
