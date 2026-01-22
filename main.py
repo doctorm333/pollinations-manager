@@ -2,6 +2,8 @@ import customtkinter as ctk
 import tkinter as tk
 import json
 import os
+import sys
+import subprocess
 import requests
 import webbrowser
 import threading
@@ -9,6 +11,16 @@ import random
 from PIL import Image, ImageTk
 from datetime import datetime
 from tkinter import filedialog, messagebox
+
+
+def open_file_or_folder(path):
+    """Cross-platform function to open file or folder"""
+    if sys.platform == 'win32':
+        open_file_or_folder(path)
+    elif sys.platform == 'darwin':  # macOS
+        subprocess.run(['open', path])
+    else:  # Linux
+        subprocess.run(['xdg-open', path])
 
 # --- LOCALIZATION ---
 
@@ -1099,7 +1111,7 @@ class PollinationsApp(ctk.CTk):
     def open_save_folder(self):
         folder = self.config.get('save_folder', 'pollinations_results')
         if os.path.exists(folder):
-            os.startfile(folder)
+            open_file_or_folder(folder)
         else:
             messagebox.showwarning(self.t("warning"), self.t("folder_not_exist"))
 
@@ -1519,7 +1531,7 @@ class PollinationsApp(ctk.CTk):
             # Для видео показываем большую кнопку
             label.configure(text=f"🎬 {self.t('video_saved')}", font=("Arial", 20, "bold"), cursor="hand2")
             label.pack(expand=True, fill="both")
-            label.bind("<Button-1>", lambda e: os.startfile(file_path))
+            label.bind("<Button-1>", lambda e: open_file_or_folder(file_path))
 
         elif file_path:
             # Фото
@@ -1532,7 +1544,7 @@ class PollinationsApp(ctk.CTk):
                 ctk_img = ctk.CTkImage(light_image=img_data, dark_image=img_data, size=(w_size, base_height))
                 
                 label.configure(image=ctk_img, text="")
-                label.bind("<Button-1>", lambda e: os.startfile(file_path))
+                label.bind("<Button-1>", lambda e: open_file_or_folder(file_path))
                 label.configure(cursor="hand2")
                 label.pack(expand=True, fill="both")
             except Exception as e:

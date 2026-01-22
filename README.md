@@ -4,7 +4,7 @@
 
 ![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)
 ![License](https://img.shields.io/badge/License-MIT-green.svg)
-![Platform](https://img.shields.io/badge/Platform-Windows-lightgrey.svg)
+![Platform](https://img.shields.io/badge/Platform-Windows%20|%20macOS%20|%20Linux-lightgrey.svg)
 ![CustomTkinter](https://img.shields.io/badge/UI-CustomTkinter-orange.svg)
 
 **A modern desktop GUI application for Pollinations.ai API**
@@ -91,16 +91,34 @@ Generate images, videos, and chat with AI models - all in one beautiful interfac
    ```bash
    install.bat
    ```
-   This will:
-   - Check Python installation
-   - Create virtual environment
-   - Install all dependencies
-   - Create run script
 
 3. **Start the app:**
    ```bash
    run.bat
    ```
+
+### Quick Install (macOS / Linux)
+
+1. **Download or clone the repository:**
+   ```bash
+   git clone https://github.com/doctorm333/pollinations-manager.git
+   cd pollinations-manager
+   ```
+
+2. **Make scripts executable and run installer:**
+   ```bash
+   chmod +x install.sh run.sh
+   ./install.sh
+   ```
+
+3. **Start the app:**
+   ```bash
+   ./run.sh
+   ```
+
+> **Note for macOS:** If you see a security warning, go to System Preferences → Security & Privacy and allow the app.
+
+> **Note for Linux:** You may need to install tkinter: `sudo apt install python3-tk` (Ubuntu/Debian) or `sudo dnf install python3-tkinter` (Fedora)
 
 ### Manual Install (All Platforms)
 
@@ -244,16 +262,18 @@ pollinations-manager/
 ├── requirements.txt     # Python dependencies
 ├── config.example.json  # Configuration template
 ├── install.bat          # Windows installer
+├── install.sh           # macOS/Linux installer
 ├── run.bat              # Windows launcher
+├── run.sh               # macOS/Linux launcher
 ├── .gitignore           # Git ignore rules
 ├── LICENSE              # MIT License
 ├── README.md            # This file
 ├── CONTRIBUTING.md      # Contribution guidelines
 └── assets/              # Screenshots and demo media
     ├── demo.gif
-    ├── screenshot_chat.png
-    ├── screenshot_image.png
-    └── screenshot_video.png
+    ├── Screen1.jpg
+    ├── Screen2.jpg
+    └── Screen3.jpg
 ```
 
 ---
