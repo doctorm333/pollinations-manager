@@ -15,52 +15,71 @@ from tkinter import filedialog, messagebox
 from io import BytesIO
 
 
-# Free image hosting via imgbb.com (no API key needed for basic use)
+# Free image hosting - no API keys required
 def upload_image_to_hosting(image_path):
     """Upload image to free hosting and return URL"""
-    try:
-        # Read and encode image
-        with open(image_path, "rb") as f:
-            image_data = base64.b64encode(f.read()).decode('utf-8')
 
-        # Use imgbb free API (anonymous upload)
-        url = "https://api.imgbb.com/1/upload"
-        payload = {
-            "key": "7a1d9c3b8f2e4a5b6c7d8e9f0a1b2c3d",  # Free public key
-            "image": image_data
-        }
+    # Try multiple services in order
+    services = [
+        upload_to_0x0,      # 0x0.st - simple, reliable
+        upload_to_catbox,   # catbox.moe - popular
+        upload_to_uguu,     # uguu.se - temporary
+    ]
 
-        response = requests.post(url, data=payload, timeout=30)
+    for service in services:
+        try:
+            url = service(image_path)
+            if url and url.startswith("http"):
+                print(f"Upload success: {url}")
+                return url
+        except Exception as e:
+            print(f"Service failed: {e}")
+            continue
 
+    return None
+
+
+def upload_to_0x0(image_path):
+    """Upload to 0x0.st - free, no registration"""
+    with open(image_path, "rb") as f:
+        response = requests.post(
+            "https://0x0.st",
+            files={"file": f},
+            timeout=60
+        )
         if response.status_code == 200:
-            data = response.json()
-            if data.get("success"):
-                return data["data"]["url"]
-
-        # Fallback: try catbox.moe
-        return upload_to_catbox(image_path)
-
-    except Exception as e:
-        print(f"Upload error: {e}")
-        return None
+            return response.text.strip()
+    return None
 
 
 def upload_to_catbox(image_path):
-    """Fallback upload to catbox.moe"""
-    try:
-        with open(image_path, "rb") as f:
-            files = {"fileToUpload": f}
-            data = {"reqtype": "fileupload"}
-            response = requests.post(
-                "https://catbox.moe/user/api.php",
-                files=files,
-                data=data,
-                timeout=60
-            )
-            if response.status_code == 200:
-                return response.text.strip()
-    except Exception as e:
-        print(f"Catbox upload error: {e}")
+    """Upload to catbox.moe - free, permanent"""
+    with open(image_path, "rb") as f:
+        response = requests.post(
+            "https://catbox.moe/user/api.php",
+            files={"fileToUpload": f},
+            data={"reqtype": "fileupload"},
+            timeout=60
+        )
+        if response.status_code == 200:
+            url = response.text.strip()
+            if url.startswith("http"):
+                return url
+    return None
+
+
+def upload_to_uguu(image_path):
+    """Upload to uguu.se - temporary (48 hours)"""
+    with open(image_path, "rb") as f:
+        response = requests.post(
+            "https://uguu.se/upload.php",
+            files={"files[]": f},
+            timeout=60
+        )
+        if response.status_code == 200:
+            data = response.json()
+            if data.get("success") and data.get("files"):
+                return data["files"][0]["url"]
     return None
 
 
