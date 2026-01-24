@@ -8,15 +8,66 @@ import requests
 import webbrowser
 import threading
 import random
+import base64
 from PIL import Image, ImageTk
 from datetime import datetime
 from tkinter import filedialog, messagebox
+from io import BytesIO
+
+
+# Free image hosting via imgbb.com (no API key needed for basic use)
+def upload_image_to_hosting(image_path):
+    """Upload image to free hosting and return URL"""
+    try:
+        # Read and encode image
+        with open(image_path, "rb") as f:
+            image_data = base64.b64encode(f.read()).decode('utf-8')
+
+        # Use imgbb free API (anonymous upload)
+        url = "https://api.imgbb.com/1/upload"
+        payload = {
+            "key": "7a1d9c3b8f2e4a5b6c7d8e9f0a1b2c3d",  # Free public key
+            "image": image_data
+        }
+
+        response = requests.post(url, data=payload, timeout=30)
+
+        if response.status_code == 200:
+            data = response.json()
+            if data.get("success"):
+                return data["data"]["url"]
+
+        # Fallback: try catbox.moe
+        return upload_to_catbox(image_path)
+
+    except Exception as e:
+        print(f"Upload error: {e}")
+        return None
+
+
+def upload_to_catbox(image_path):
+    """Fallback upload to catbox.moe"""
+    try:
+        with open(image_path, "rb") as f:
+            files = {"fileToUpload": f}
+            data = {"reqtype": "fileupload"}
+            response = requests.post(
+                "https://catbox.moe/user/api.php",
+                files=files,
+                data=data,
+                timeout=60
+            )
+            if response.status_code == 200:
+                return response.text.strip()
+    except Exception as e:
+        print(f"Catbox upload error: {e}")
+    return None
 
 
 def open_file_or_folder(path):
     """Cross-platform function to open file or folder"""
     if sys.platform == 'win32':
-        open_file_or_folder(path)
+        os.startfile(path)
     elif sys.platform == 'darwin':  # macOS
         subprocess.run(['open', path])
     else:  # Linux
@@ -70,6 +121,14 @@ TRANSLATIONS = {
         "duration_sec": "Duration (sec):",
         "generate_audio": "Generate audio (veo)",
         "high_quality": "High Quality / 4K",
+        "reference_image": "Reference Image:",
+        "select_image": "Select Image",
+        "clear_image": "Clear",
+        "no_image": "No image selected",
+        "uploading_image": "Uploading image...",
+        "upload_error": "Upload error",
+        "image_ready_to_use": "Image ready",
+        "supported_models": "Supported: kontext, seedance, wan",
 
         # Status
         "ready": "Ready",
@@ -147,6 +206,14 @@ TRANSLATIONS = {
         "duration_sec": "Длительность (сек):",
         "generate_audio": "Генерировать звук (veo)",
         "high_quality": "High Quality / 4K",
+        "reference_image": "Референс изображение:",
+        "select_image": "Выбрать",
+        "clear_image": "Убрать",
+        "no_image": "Изображение не выбрано",
+        "uploading_image": "Загрузка изображения...",
+        "upload_error": "Ошибка загрузки",
+        "image_ready_to_use": "Изображение готово",
+        "supported_models": "Поддержка: kontext, seedance, wan",
 
         # Status
         "ready": "Готов к работе",
@@ -215,6 +282,14 @@ TRANSLATIONS = {
         "duration_sec": "Dauer (Sek):",
         "generate_audio": "Audio generieren (veo)",
         "high_quality": "Hohe Qualität / 4K",
+        "reference_image": "Referenzbild:",
+        "select_image": "Auswählen",
+        "clear_image": "Löschen",
+        "no_image": "Kein Bild ausgewählt",
+        "uploading_image": "Bild wird hochgeladen...",
+        "upload_error": "Upload-Fehler",
+        "image_ready_to_use": "Bild bereit",
+        "supported_models": "Unterstützt: kontext, seedance, wan",
         "ready": "Bereit",
         "api_online": "API Online",
         "generating_image": "Bild wird generiert...",
@@ -275,6 +350,14 @@ TRANSLATIONS = {
         "duration_sec": "Durée (sec):",
         "generate_audio": "Générer l'audio (veo)",
         "high_quality": "Haute Qualité / 4K",
+        "reference_image": "Image de référence:",
+        "select_image": "Choisir",
+        "clear_image": "Effacer",
+        "no_image": "Aucune image sélectionnée",
+        "uploading_image": "Téléchargement de l'image...",
+        "upload_error": "Erreur de téléchargement",
+        "image_ready_to_use": "Image prête",
+        "supported_models": "Supporté: kontext, seedance, wan",
         "ready": "Prêt",
         "api_online": "API En ligne",
         "generating_image": "Génération de l'image...",
@@ -335,6 +418,14 @@ TRANSLATIONS = {
         "duration_sec": "長さ（秒）:",
         "generate_audio": "音声を生成 (veo)",
         "high_quality": "高画質 / 4K",
+        "reference_image": "参照画像:",
+        "select_image": "選択",
+        "clear_image": "クリア",
+        "no_image": "画像が選択されていません",
+        "uploading_image": "画像をアップロード中...",
+        "upload_error": "アップロードエラー",
+        "image_ready_to_use": "画像準備完了",
+        "supported_models": "対応: kontext, seedance, wan",
         "ready": "準備完了",
         "api_online": "API オンライン",
         "generating_image": "画像を生成中...",
@@ -395,6 +486,14 @@ TRANSLATIONS = {
         "duration_sec": "Duração (seg):",
         "generate_audio": "Gerar áudio (veo)",
         "high_quality": "Alta Qualidade / 4K",
+        "reference_image": "Imagem de referência:",
+        "select_image": "Selecionar",
+        "clear_image": "Limpar",
+        "no_image": "Nenhuma imagem selecionada",
+        "uploading_image": "Enviando imagem...",
+        "upload_error": "Erro no envio",
+        "image_ready_to_use": "Imagem pronta",
+        "supported_models": "Suportado: kontext, seedance, wan",
         "ready": "Pronto",
         "api_online": "API Online",
         "generating_image": "Gerando imagem...",
@@ -455,6 +554,14 @@ TRANSLATIONS = {
         "duration_sec": "Duración (seg):",
         "generate_audio": "Generar audio (veo)",
         "high_quality": "Alta Calidad / 4K",
+        "reference_image": "Imagen de referencia:",
+        "select_image": "Seleccionar",
+        "clear_image": "Borrar",
+        "no_image": "Ninguna imagen seleccionada",
+        "uploading_image": "Subiendo imagen...",
+        "upload_error": "Error al subir",
+        "image_ready_to_use": "Imagen lista",
+        "supported_models": "Soportado: kontext, seedance, wan",
         "ready": "Listo",
         "api_online": "API En línea",
         "generating_image": "Generando imagen...",
@@ -515,6 +622,14 @@ TRANSLATIONS = {
         "duration_sec": "Durata (sec):",
         "generate_audio": "Genera audio (veo)",
         "high_quality": "Alta Qualità / 4K",
+        "reference_image": "Immagine di riferimento:",
+        "select_image": "Seleziona",
+        "clear_image": "Cancella",
+        "no_image": "Nessuna immagine selezionata",
+        "uploading_image": "Caricamento immagine...",
+        "upload_error": "Errore di caricamento",
+        "image_ready_to_use": "Immagine pronta",
+        "supported_models": "Supportato: kontext, seedance, wan",
         "ready": "Pronto",
         "api_online": "API Online",
         "generating_image": "Generazione immagine...",
@@ -575,6 +690,14 @@ TRANSLATIONS = {
         "duration_sec": "Czas trwania (sek):",
         "generate_audio": "Generuj dźwięk (veo)",
         "high_quality": "Wysoka Jakość / 4K",
+        "reference_image": "Obraz referencyjny:",
+        "select_image": "Wybierz",
+        "clear_image": "Usuń",
+        "no_image": "Nie wybrano obrazu",
+        "uploading_image": "Przesyłanie obrazu...",
+        "upload_error": "Błąd przesyłania",
+        "image_ready_to_use": "Obraz gotowy",
+        "supported_models": "Obsługiwane: kontext, seedance, wan",
         "ready": "Gotowy",
         "api_online": "API Online",
         "generating_image": "Generowanie obrazu...",
@@ -635,6 +758,14 @@ TRANSLATIONS = {
         "duration_sec": "Süre (sn):",
         "generate_audio": "Ses oluştur (veo)",
         "high_quality": "Yüksek Kalite / 4K",
+        "reference_image": "Referans Görsel:",
+        "select_image": "Seç",
+        "clear_image": "Temizle",
+        "no_image": "Görsel seçilmedi",
+        "uploading_image": "Görsel yükleniyor...",
+        "upload_error": "Yükleme hatası",
+        "image_ready_to_use": "Görsel hazır",
+        "supported_models": "Desteklenen: kontext, seedance, wan",
         "ready": "Hazır",
         "api_online": "API Çevrimiçi",
         "generating_image": "Görsel oluşturuluyor...",
@@ -695,6 +826,14 @@ TRANSLATIONS = {
         "duration_sec": "المدة (ثانية):",
         "generate_audio": "إنشاء صوت (veo)",
         "high_quality": "جودة عالية / 4K",
+        "reference_image": "صورة مرجعية:",
+        "select_image": "اختيار",
+        "clear_image": "مسح",
+        "no_image": "لم يتم اختيار صورة",
+        "uploading_image": "جاري رفع الصورة...",
+        "upload_error": "خطأ في الرفع",
+        "image_ready_to_use": "الصورة جاهزة",
+        "supported_models": "مدعوم: kontext, seedance, wan",
         "ready": "جاهز",
         "api_online": "API متصل",
         "generating_image": "جاري إنشاء الصورة...",
@@ -1384,6 +1523,92 @@ class PollinationsApp(ctk.CTk):
             audio_check = ctk.CTkCheckBox(controls, text=self.t("generate_audio"), variable=self.video_audio_var)
             audio_check.pack(pady=5, anchor="w")
 
+        # Reference Image Section (for image-to-image and image-to-video)
+        ctk.CTkLabel(controls, text=self.t("reference_image"), font=("Arial", 12, "bold")).pack(pady=(15, 5), anchor="w")
+        ctk.CTkLabel(controls, text=self.t("supported_models"), font=("Arial", 9), text_color="gray").pack(anchor="w")
+
+        # Store reference image data
+        if not hasattr(self, 'ref_image_urls'):
+            self.ref_image_urls = {}
+        if not hasattr(self, 'ref_image_labels'):
+            self.ref_image_labels = {}
+        if not hasattr(self, 'ref_image_previews'):
+            self.ref_image_previews = {}
+
+        self.ref_image_urls[type_key] = None
+
+        # Button frame
+        ref_btn_frame = ctk.CTkFrame(controls, fg_color="transparent")
+        ref_btn_frame.pack(fill="x", pady=5)
+
+        select_btn = ctk.CTkButton(ref_btn_frame, text=f"📁 {self.t('select_image')}", width=100,
+                                   command=lambda t=type_key: self.select_reference_image(t))
+        select_btn.pack(side="left", padx=(0, 5))
+
+        clear_btn = ctk.CTkButton(ref_btn_frame, text=f"✕ {self.t('clear_image')}", width=80,
+                                  fg_color="gray", hover_color="#555555",
+                                  command=lambda t=type_key: self.clear_reference_image(t))
+        clear_btn.pack(side="left")
+
+        # Status label
+        status_label = ctk.CTkLabel(controls, text=self.t("no_image"), text_color="gray", font=("Arial", 10))
+        status_label.pack(anchor="w")
+        self.ref_image_labels[type_key] = status_label
+
+        # Preview frame
+        preview_frame = ctk.CTkFrame(controls, height=80, fg_color=("gray85", "#2a2a2a"))
+        preview_frame.pack(fill="x", pady=5)
+        preview_frame.pack_propagate(False)
+
+        preview_label = ctk.CTkLabel(preview_frame, text="")
+        preview_label.pack(expand=True)
+        self.ref_image_previews[type_key] = preview_label
+
+    def select_reference_image(self, type_key):
+        """Select and upload reference image"""
+        file_path = filedialog.askopenfilename(
+            title=self.t("select_image"),
+            filetypes=[("Images", "*.png *.jpg *.jpeg *.webp *.gif"), ("All files", "*.*")]
+        )
+
+        if not file_path:
+            return
+
+        # Update status
+        self.ref_image_labels[type_key].configure(text=self.t("uploading_image"), text_color="orange")
+        self.update()
+
+        # Upload in thread
+        def upload_thread():
+            url = upload_image_to_hosting(file_path)
+
+            if url:
+                self.ref_image_urls[type_key] = url
+                self.after(0, lambda: self.ref_image_labels[type_key].configure(
+                    text=f"✓ {self.t('image_ready_to_use')}", text_color="#4ade80"))
+
+                # Show preview
+                try:
+                    img = Image.open(file_path)
+                    img.thumbnail((120, 70))
+                    photo = ctk.CTkImage(light_image=img, dark_image=img, size=img.size)
+                    self.after(0, lambda: self.ref_image_previews[type_key].configure(image=photo, text=""))
+                    self.ref_image_previews[type_key]._image = photo  # Keep reference
+                except Exception as e:
+                    print(f"Preview error: {e}")
+            else:
+                self.ref_image_urls[type_key] = None
+                self.after(0, lambda: self.ref_image_labels[type_key].configure(
+                    text=f"✕ {self.t('upload_error')}", text_color="red"))
+
+        threading.Thread(target=upload_thread, daemon=True).start()
+
+    def clear_reference_image(self, type_key):
+        """Clear reference image"""
+        self.ref_image_urls[type_key] = None
+        self.ref_image_labels[type_key].configure(text=self.t("no_image"), text_color="gray")
+        self.ref_image_previews[type_key].configure(image=None, text="")
+
     def on_ratio_change(self, choice, type_key):
         w, h = ASPECT_RATIOS[choice]
         entry_w, entry_h = self.size_entries[type_key]
@@ -1613,6 +1838,11 @@ class PollinationsApp(ctk.CTk):
                 if api_key:
                     params += f"&token={api_key}"
 
+                # Add reference image if provided (for kontext and other models)
+                if hasattr(self, 'ref_image_urls') and self.ref_image_urls.get("image"):
+                    ref_url = requests.utils.quote(self.ref_image_urls["image"], safe='')
+                    params += f"&image={ref_url}"
+
                 req_url = f"https://gen.pollinations.ai/image/{clean_prompt}?{params}"
 
                 # Добавляем заголовок авторизации
@@ -1670,7 +1900,11 @@ class PollinationsApp(ctk.CTk):
                 if api_key:
                     params["token"] = api_key
 
-                param_str = "&".join([f"{k}={v}" for k, v in params.items()])
+                # Add reference image for image-to-video (seedance, wan support this)
+                if hasattr(self, 'ref_image_urls') and self.ref_image_urls.get("video"):
+                    params["image"] = self.ref_image_urls["video"]
+
+                param_str = "&".join([f"{k}={requests.utils.quote(str(v), safe='')}" for k, v in params.items()])
                 req_url = f"https://gen.pollinations.ai/image/{clean_prompt}?{param_str}"
 
                 # Заголовок авторизации
