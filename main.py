@@ -1606,15 +1606,24 @@ class PollinationsApp(ctk.CTk):
                 self.after(0, lambda: self.ref_image_labels[type_key].configure(
                     text=f"✓ {self.t('image_ready_to_use')}", text_color="#4ade80"))
 
-                # Show preview
-                try:
-                    img = Image.open(file_path)
-                    img.thumbnail((120, 70))
-                    photo = ctk.CTkImage(light_image=img, dark_image=img, size=img.size)
-                    self.after(0, lambda: self.ref_image_previews[type_key].configure(image=photo, text=""))
-                    self.ref_image_previews[type_key]._image = photo  # Keep reference
-                except Exception as e:
-                    print(f"Preview error: {e}")
+                # Show preview on main thread
+                def show_preview():
+                    try:
+                        img = Image.open(file_path)
+                        img.thumbnail((120, 70))
+                        photo = ctk.CTkImage(light_image=img, dark_image=img, size=img.size)
+                        # Store reference to prevent garbage collection
+                        if not hasattr(self, '_ref_photos'):
+                            self._ref_photos = {}
+                        self._ref_photos[type_key] = photo
+                        # Update label
+                        preview_label = self.ref_image_previews[type_key]
+                        preview_label.configure(image=photo)
+                        preview_label.configure(text="")
+                    except Exception as e:
+                        print(f"Preview error: {e}")
+
+                self.after(10, show_preview)
             else:
                 self.ref_image_urls[type_key] = None
                 self.after(0, lambda: self.ref_image_labels[type_key].configure(
@@ -1626,7 +1635,13 @@ class PollinationsApp(ctk.CTk):
         """Clear reference image"""
         self.ref_image_urls[type_key] = None
         self.ref_image_labels[type_key].configure(text=self.t("no_image"), text_color="gray")
-        self.ref_image_previews[type_key].configure(image=None, text="")
+        # Clear preview
+        if hasattr(self, '_ref_photos') and type_key in self._ref_photos:
+            del self._ref_photos[type_key]
+        try:
+            self.ref_image_previews[type_key].configure(image="", text="")
+        except:
+            pass
 
     def on_ratio_change(self, choice, type_key):
         w, h = ASPECT_RATIOS[choice]
