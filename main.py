@@ -1317,7 +1317,7 @@ class PollinationsApp(ctk.CTk):
         bottom_frame.grid(row=2, column=0, sticky="ew", padx=5, pady=10)
         bottom_frame.grid_columnconfigure(0, weight=1)
 
-        self.chat_input = ctk.CTkTextbox(bottom_frame, height=60, font=("Arial", 12))
+        self.chat_input = ctk.CTkTextbox(bottom_frame, height=100, font=("Arial", 12))
         self.chat_input.grid(row=0, column=0, sticky="ew", padx=(0, 10))
         self.chat_input.bind("<Control-Return>", lambda e: self.send_chat_message())
         self.chat_input.bind("<Button-3>", lambda e: self.show_context_menu(e, self.chat_input))
@@ -1672,7 +1672,7 @@ class PollinationsApp(ctk.CTk):
         prompt_label = ctk.CTkLabel(parent, text=self.t("prompt_label"), anchor="w")
         prompt_label.grid(row=1, column=0, sticky="w", padx=10, pady=(5, 0))
 
-        prompt_entry = ctk.CTkTextbox(parent, height=80)
+        prompt_entry = ctk.CTkTextbox(parent, height=120)
         prompt_entry.grid(row=2, column=0, sticky="new", padx=10, pady=5)
         prompt_entry.bind("<Button-3>", lambda event: self.show_context_menu(event, prompt_entry))
         self.bind_hotkeys(prompt_entry)
@@ -1874,10 +1874,14 @@ class PollinationsApp(ctk.CTk):
 
                 # Add reference image if provided (for kontext and other models)
                 if hasattr(self, 'ref_image_urls') and self.ref_image_urls.get("image"):
-                    ref_url = requests.utils.quote(self.ref_image_urls["image"], safe='')
-                    params += f"&image={ref_url}"
+                    ref_url = self.ref_image_urls["image"]
+                    # URL encode but preserve :/ for the URL structure
+                    encoded_ref = requests.utils.quote(ref_url, safe=':/')
+                    params += f"&image={encoded_ref}"
+                    self.log(type_key, f"Референс: {ref_url}")
 
                 req_url = f"https://gen.pollinations.ai/image/{clean_prompt}?{params}"
+                print(f"[DEBUG] Request URL: {req_url[:200]}...")
 
                 # Добавляем заголовок авторизации
                 headers = {}
@@ -1937,9 +1941,18 @@ class PollinationsApp(ctk.CTk):
                 # Add reference image for image-to-video (seedance, wan support this)
                 if hasattr(self, 'ref_image_urls') and self.ref_image_urls.get("video"):
                     params["image"] = self.ref_image_urls["video"]
+                    self.log(type_key, f"Референс: {self.ref_image_urls['video']}")
 
-                param_str = "&".join([f"{k}={requests.utils.quote(str(v), safe='')}" for k, v in params.items()])
+                # Encode params, but preserve :/ in URLs
+                def encode_param(v):
+                    s = str(v)
+                    if s.startswith("http"):
+                        return requests.utils.quote(s, safe=':/')
+                    return requests.utils.quote(s, safe='')
+
+                param_str = "&".join([f"{k}={encode_param(v)}" for k, v in params.items()])
                 req_url = f"https://gen.pollinations.ai/image/{clean_prompt}?{param_str}"
+                print(f"[DEBUG] Video request URL: {req_url[:200]}...")
 
                 # Заголовок авторизации
                 headers = {}
