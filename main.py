@@ -179,6 +179,32 @@ TRANSLATIONS = {
         "error_download": "Download error",
         "error_timeout": "Timeout: server did not respond",
         "error_api": "API Error",
+
+        # Log messages
+        "log_request": "Request: {model} ({id})",
+        "log_done": "Done!",
+        "log_error": "Error: {detail}",
+        "log_error_code": "Error {code}: {detail}",
+        "log_video_generating": "Generating video ({model})... This may take 1-2 minutes.",
+        "log_sending_request": "Sending request to server...",
+        "log_video_saved": "Video saved!",
+        "log_got_link": "Got link, downloading...",
+        "log_unexpected_response": "Unexpected response: {detail}",
+        "log_api_error": "API Error {code}: {detail}",
+        "log_timeout_3min": "Timeout: server did not respond in 3 minutes",
+        "log_llm_request": "LLM request ({model})...",
+        "log_done_saved": "Done! Saved: {filename}",
+        "log_no_data": "No data",
+        "log_reference": "Reference: {url}",
+        "preview_error": "Preview error: {detail}",
+        "chat_error_code": "Error {code}",
+        "chat_error": "Error: {detail}",
+
+        # Context menu
+        "ctx_copy": "Copy",
+        "ctx_paste": "Paste",
+        "ctx_cut": "Cut",
+        "ctx_select_all": "Select All",
     },
     "ru": {
         # App
@@ -264,6 +290,32 @@ TRANSLATIONS = {
         "error_download": "Ошибка скачивания",
         "error_timeout": "Таймаут: сервер не ответил",
         "error_api": "Ошибка API",
+
+        # Log messages
+        "log_request": "Запрос: {model} ({id})",
+        "log_done": "Готово!",
+        "log_error": "Ошибка: {detail}",
+        "log_error_code": "Ошибка {code}: {detail}",
+        "log_video_generating": "Генерация видео ({model})... Это может занять 1-2 минуты.",
+        "log_sending_request": "Отправляю запрос на сервер...",
+        "log_video_saved": "Видео сохранено!",
+        "log_got_link": "Получена ссылка, скачиваю...",
+        "log_unexpected_response": "Неожиданный ответ: {detail}",
+        "log_api_error": "Ошибка API {code}: {detail}",
+        "log_timeout_3min": "Таймаут: сервер не ответил за 3 минуты",
+        "log_llm_request": "Запрос LLM ({model})...",
+        "log_done_saved": "Готово! Сохранено: {filename}",
+        "log_no_data": "Нет данных",
+        "log_reference": "Референс: {url}",
+        "preview_error": "Ошибка превью: {detail}",
+        "chat_error_code": "Ошибка {code}",
+        "chat_error": "Ошибка: {detail}",
+
+        # Context menu
+        "ctx_copy": "Копировать",
+        "ctx_paste": "Вставить",
+        "ctx_cut": "Вырезать",
+        "ctx_select_all": "Выделить всё",
     },
     "de": {
         "app_title": "Pollinations Manager | AI Chat Hub Edition",
@@ -919,24 +971,27 @@ TELEGRAM_LINK = "https://t.me/+SSC4B1Dnrlc2ZTky"
 # Цены (база данных) - Display Name -> Price String
 PRICING_DB = {
     "image": {
-        "Flux Schnell": "🖼️ 0.0002 /image",
-        "Z-Image Turbo": "🖼️ 0.0002 /image",
-        "SDXL Turbo": "🖼️ 0.0003 /image",
-        "FLUX.2 Klein 4B": "🖼️ 0.008 /image",
-        "FLUX.2 Klein 9B": "🖼️ 0.012 /image",
-        "GPT Image 1 Mini": "🖼️ 8.0 /M tokens",
-        "Seedream 4.0": "🖼️ 0.03 /image",
-        "FLUX.1 Kontext": "🖼️ 0.04 /image",
-        "NanoBanana": "🖼️ 30.0 /M tokens",
-        "Seedream 4.5 Pro": "🖼️ 0.04 /image",
-        "GPT Image 1.5": "🖼️ 32.0 /M tokens",
-        "NanoBanana Pro": "🖼️ 120.0 /M tokens",
+        "Flux Schnell": "🖼️ 0.0002 /img",
+        "Z-Image Turbo": "🖼️ 0.0002 /img",
+        "Imagen 4 (api.airforce)": "🖼️ 0.0025 /img",
+        "Grok Imagine (api.airforce)": "🖼️ 0.0025 /img",
+        "FLUX.2 Klein 4B": "🖼️ 0.008 /img",
+        "FLUX.2 Klein 9B": "🖼️ 0.012 /img",
+        "GPT Image 1 Mini": "🖼️ 8.0 /M",
+        "💎 Seedream 4.0": "🖼️ 0.03 /img",
+        "💎 FLUX.1 Kontext": "🖼️ 0.04 /img",
+        "💎 NanoBanana": "🖼️ 30.0 /M",
+        "💎 Seedream 4.5 Pro": "🖼️ 0.04 /img",
+        "💎 GPT Image 1.5": "🖼️ 32.0 /M",
+        "💎 NanoBanana Pro": "🖼️ 120.0 /M",
     },
     "video": {
-        "Seedance Pro-Fast": "🎬 1.0 /M tokens",
-        "Seedance Lite": "🎬 1.8 /M tokens",
-        "Wan 2.6": "🎬 0.025 /sec + 🔊 0.025 /sec",
-        "Veo 3.1 Fast": "🎬 0.150 /sec",
+        "Grok Video (api.airforce)": "🎬 0.003 /sec",
+        "💎 LTX-2": "🎬 0.010 /sec",
+        "💎 Seedance Pro-Fast": "🎬 1.0 /M",
+        "💎 Wan 2.6": "🎬 0.050 /sec + 🔊 0.050 /sec",
+        "Seedance Lite": "🎬 1.8 /M",
+        "💎 Veo 3.1 Fast": "🎬 0.150 /sec",
     },
     "text": {
         "Amazon Nova Micro": "In: 0.04/M | Out: 0.15/M",
@@ -969,22 +1024,25 @@ PRICING_DB = {
 MODEL_IDS = {
     # Image models
     "Flux Schnell": "flux",
-    "Z-Image Turbo": "turbo",
-    "SDXL Turbo": "turbo",
-    "FLUX.2 Klein 4B": "flux-klein-4b",
-    "FLUX.2 Klein 9B": "flux-klein-9b",
+    "Z-Image Turbo": "zimage",
+    "Imagen 4 (api.airforce)": "imagen-4",
+    "Grok Imagine (api.airforce)": "grok-imagine",
+    "FLUX.2 Klein 4B": "klein",
+    "FLUX.2 Klein 9B": "klein-large",
     "GPT Image 1 Mini": "gptimage",
-    "Seedream 4.0": "seedream",
-    "FLUX.1 Kontext": "kontext",
-    "NanoBanana": "nanobanana",
-    "Seedream 4.5 Pro": "seedream-pro",
-    "GPT Image 1.5": "gptimage-1.5",
-    "NanoBanana Pro": "nanobanana-pro",
+    "💎 Seedream 4.0": "seedream",
+    "💎 FLUX.1 Kontext": "kontext",
+    "💎 NanoBanana": "nanobanana",
+    "💎 Seedream 4.5 Pro": "seedream-pro",
+    "💎 GPT Image 1.5": "gptimage-large",
+    "💎 NanoBanana Pro": "nanobanana-pro",
     # Video models
-    "Seedance Pro-Fast": "seedance-pro",
+    "Grok Video (api.airforce)": "grok-video",
+    "💎 LTX-2": "ltx-2",
+    "💎 Seedance Pro-Fast": "seedance-pro",
+    "💎 Wan 2.6": "wan",
     "Seedance Lite": "seedance",
-    "Wan 2.6": "wan",
-    "Veo 3.1 Fast": "veo",
+    "💎 Veo 3.1 Fast": "veo",
     # Text models
     "Amazon Nova Micro": "amazon-nova-micro",
     "Mistral Small 3.2 24B": "mistral-small",
@@ -1068,11 +1126,11 @@ class PollinationsApp(ctk.CTk):
     def show_context_menu(self, event, widget):
         try:
             menu = tk.Menu(self, tearoff=0)
-            menu.add_command(label="Копировать", command=lambda: self.copy_widget_text(widget))
-            menu.add_command(label="Вставить", command=lambda: self.paste_to_widget(widget))
-            menu.add_command(label="Вырезать", command=lambda: self.cut_widget_text(widget))
+            menu.add_command(label=self.t("ctx_copy"), command=lambda: self.copy_widget_text(widget))
+            menu.add_command(label=self.t("ctx_paste"), command=lambda: self.paste_to_widget(widget))
+            menu.add_command(label=self.t("ctx_cut"), command=lambda: self.cut_widget_text(widget))
             menu.add_separator()
-            menu.add_command(label="Выделить всё", command=lambda: self.select_all_widget(widget))
+            menu.add_command(label=self.t("ctx_select_all"), command=lambda: self.select_all_widget(widget))
             menu.tk_popup(event.x_root, event.y_root)
         finally:
             menu.grab_release()
@@ -1086,7 +1144,7 @@ class PollinationsApp(ctk.CTk):
                 text = widget.selection_get()
             self.clipboard_clear()
             self.clipboard_append(text)
-        except:
+        except Exception:
             pass
 
     def paste_to_widget(self, widget):
@@ -1096,16 +1154,16 @@ class PollinationsApp(ctk.CTk):
             if isinstance(widget, ctk.CTkTextbox):
                 try:
                     widget.delete("sel.first", "sel.last")
-                except:
+                except Exception:
                     pass
                 widget.insert("insert", text)
             elif isinstance(widget, ctk.CTkEntry):
                 try:
                     widget.delete("sel.first", "sel.last")
-                except:
+                except Exception:
                     pass
                 widget.insert("insert", text)
-        except:
+        except Exception:
             pass
 
     def cut_widget_text(self, widget):
@@ -1114,7 +1172,7 @@ class PollinationsApp(ctk.CTk):
         try:
             if isinstance(widget, ctk.CTkTextbox):
                 widget.delete("sel.first", "sel.last")
-        except:
+        except Exception:
             pass
 
     def select_all_widget(self, widget):
@@ -1370,8 +1428,12 @@ class PollinationsApp(ctk.CTk):
                                 text_color=("gray10", "gray90"))
         msg_text.pack(fill="x", padx=10, pady=(2, 8))
 
-        # Кнопка копирования для ответов AI
-        if role == "assistant" and content != "Привет! Я готов помочь. Выберите модель и напишите ваш вопрос.":
+        # Кнопка копирования для ответов AI (skip welcome/cleared messages in all languages)
+        skip_texts = set()
+        for lang_data in TRANSLATIONS.values():
+            skip_texts.add(lang_data.get("chat_welcome", ""))
+            skip_texts.add(lang_data.get("chat_cleared", ""))
+        if role == "assistant" and content not in skip_texts:
             copy_btn = ctk.CTkButton(msg_frame, text="📋", width=30, height=20,
                                      fg_color="transparent", hover_color=("gray70", "#444"),
                                      command=lambda c=content: self.copy_to_clipboard(c))
@@ -1465,19 +1527,20 @@ class PollinationsApp(ctk.CTk):
                         content = json_resp['choices'][0]['message']['content']
                     elif 'output' in json_resp:
                         content = json_resp['output']
-                except:
+                except Exception:
                     pass
 
                 self.after(0, lambda: self.add_chat_message("assistant", content))
                 self.after(0, lambda: self.chat_status.configure(text="", text_color="gray"))
                 self.after(2000, self.update_balance_display)
             else:
-                error = f"Ошибка {response.status_code}"
+                error = self.t("chat_error_code").format(code=response.status_code)
                 self.after(0, lambda: self.add_chat_message("assistant", f"❌ {error}"))
                 self.after(0, lambda: self.chat_status.configure(text=error, text_color="red"))
 
         except Exception as e:
-            self.after(0, lambda: self.add_chat_message("assistant", f"❌ Ошибка: {e}"))
+            error_msg = self.t("chat_error").format(detail=e)
+            self.after(0, lambda: self.add_chat_message("assistant", f"❌ {error_msg}"))
             self.after(0, lambda: self.chat_status.configure(text=str(e), text_color="red"))
 
         finally:
@@ -1640,7 +1703,7 @@ class PollinationsApp(ctk.CTk):
             del self._ref_photos[type_key]
         try:
             self.ref_image_previews[type_key].configure(image="", text="")
-        except:
+        except Exception:
             pass
 
     def on_ratio_change(self, choice, type_key):
@@ -1739,14 +1802,14 @@ class PollinationsApp(ctk.CTk):
                         balance_raw = data.get('balance', 0)
                         try:
                             balance = f"{float(balance_raw):.2f}"
-                        except:
+                        except (ValueError, TypeError):
                             balance = str(balance_raw)
                         self.after(0, lambda b=balance: self.balance_value.configure(text=f"{b}", text_color="#4ade80"))
-                    except:
+                    except Exception:
                         self.after(0, lambda: self.balance_value.configure(text=self.t("data_error"), text_color="orange"))
                 else:
                     self.after(0, lambda: self.balance_value.configure(text=self.t("error"), text_color="red"))
-            except:
+            except Exception:
                 self.after(0, lambda: self.balance_value.configure(text=self.t("network_error"), text_color="red"))
 
         threading.Thread(target=fetch, daemon=True).start()
@@ -1807,7 +1870,7 @@ class PollinationsApp(ctk.CTk):
                 label.configure(cursor="hand2")
                 label.pack(expand=True, fill="both")
             except Exception as e:
-                label.configure(text=f"Ошибка превью: {e}", image=None)
+                label.configure(text=self.t("preview_error").format(detail=e), image=None)
                 label.pack()
 
     def start_generation(self, type_key, model, prompt):
@@ -1844,9 +1907,12 @@ class PollinationsApp(ctk.CTk):
         if type_key in ["image", "video"] and hasattr(self, 'size_entries'):
             try:
                 ew, eh = self.size_entries[type_key]
-                width = int(ew.get())
-                height = int(eh.get())
-            except:
+                w_val = int(ew.get())
+                h_val = int(eh.get())
+                # Clamp to reasonable bounds
+                width = max(64, min(4096, w_val))
+                height = max(64, min(4096, h_val))
+            except (ValueError, TypeError, KeyError):
                 pass
 
         try:
@@ -1863,7 +1929,7 @@ class PollinationsApp(ctk.CTk):
                 if styles:
                     final_prompt += ", " + ", ".join(styles)
 
-                self.log(type_key, f"Запрос: {display_model} ({model})")
+                self.log(type_key, self.t("log_request").format(model=display_model, id=model))
                 clean_prompt = requests.utils.quote(final_prompt)
                 seed = random.randint(0, 1000000000)
 
@@ -1878,7 +1944,7 @@ class PollinationsApp(ctk.CTk):
                     # URL encode but preserve :/ for the URL structure
                     encoded_ref = requests.utils.quote(ref_url, safe=':/')
                     params += f"&image={encoded_ref}"
-                    self.log(type_key, f"Референс: {ref_url}")
+                    self.log(type_key, self.t("log_reference").format(url=ref_url))
 
                 req_url = f"https://gen.pollinations.ai/image/{clean_prompt}?{params}"
                 print(f"[DEBUG] Request URL: {req_url[:200]}...")
@@ -1888,22 +1954,27 @@ class PollinationsApp(ctk.CTk):
                 if api_key:
                     headers["Authorization"] = f"Bearer {api_key}"
 
-                response = requests.get(req_url, headers=headers, timeout=120)
-                if response.status_code == 200:
-                    filename = f"{save_path}/img_{datetime.now().strftime('%Y%m%d_%H%M%S')}.jpg"
-                    with open(filename, 'wb') as f:
-                        f.write(response.content)
-                    self.log(type_key, "Готово!")
-                    self.after(0, lambda: self.display_preview("image", filename))
-                    self.after(0, lambda: self.status_label.configure(text=f"✓ {self.t('image_ready')}", text_color="#4ade80"))
-                    self.after(2000, self.update_balance_display)
+                try:
+                    response = requests.get(req_url, headers=headers, timeout=180)
+                    if response.status_code == 200:
+                        filename = f"{save_path}/img_{datetime.now().strftime('%Y%m%d_%H%M%S')}.jpg"
+                        with open(filename, 'wb') as f:
+                            f.write(response.content)
+                        self.log(type_key, self.t("log_done"))
+                        self.after(0, lambda: self.display_preview("image", filename))
+                        self.after(0, lambda: self.status_label.configure(text=f"✓ {self.t('image_ready')}", text_color="#4ade80"))
+                        self.after(2000, self.update_balance_display)
+                        self.after(5000, lambda: self.status_label.configure(text=f"✓ {self.t('ready')}", text_color="gray"))
+                    else:
+                        self.log(type_key, self.t("log_error").format(detail=response.text))
+                except requests.exceptions.Timeout:
+                    self.log(type_key, self.t("error_timeout"))
+                    self.after(0, lambda: self.status_label.configure(text=f"❌ {self.t('error_timeout')}", text_color="red"))
                     self.after(5000, lambda: self.status_label.configure(text=f"✓ {self.t('ready')}", text_color="gray"))
-                else:
-                    self.log(type_key, f"Ошибка: {response.text}")
 
             # === ГЕНЕРАЦИЯ ВИДЕО (GET) ===
             elif type_key == "video":
-                self.log(type_key, f"Генерация видео ({display_model})... Это может занять 1-2 минуты.")
+                self.log(type_key, self.t("log_video_generating").format(model=display_model))
 
                 # Определяем aspect ratio
                 if width > height:
@@ -1941,7 +2012,7 @@ class PollinationsApp(ctk.CTk):
                 # Add reference image for image-to-video (seedance, wan support this)
                 if hasattr(self, 'ref_image_urls') and self.ref_image_urls.get("video"):
                     params["image"] = self.ref_image_urls["video"]
-                    self.log(type_key, f"Референс: {self.ref_image_urls['video']}")
+                    self.log(type_key, self.t("log_reference").format(url=self.ref_image_urls['video']))
 
                 # Encode params, but preserve :/ in URLs
                 def encode_param(v):
@@ -1959,7 +2030,7 @@ class PollinationsApp(ctk.CTk):
                 if api_key:
                     headers["Authorization"] = f"Bearer {api_key}"
 
-                self.log(type_key, "Отправляю запрос на сервер...")
+                self.log(type_key, self.t("log_sending_request"))
 
                 try:
                     response = requests.get(req_url, headers=headers, timeout=180)  # 3 минуты таймаут для видео
@@ -1972,7 +2043,7 @@ class PollinationsApp(ctk.CTk):
                             filename = f"{save_path}/video_{datetime.now().strftime('%Y%m%d_%H%M%S')}.mp4"
                             with open(filename, 'wb') as f:
                                 f.write(response.content)
-                            self.log(type_key, "Видео сохранено!")
+                            self.log(type_key, self.t("log_video_saved"))
                             self.after(0, lambda: self.display_preview("video", filename, is_video=True))
                             self.after(0, lambda: self.status_label.configure(text=f"✓ {self.t('video_ready')}", text_color="#4ade80"))
                             self.after(5000, lambda: self.status_label.configure(text=f"✓ {self.t('ready')}", text_color="gray"))
@@ -1980,30 +2051,30 @@ class PollinationsApp(ctk.CTk):
                             # Возможно это ссылка на видео
                             content = response.text.strip()
                             if content.startswith("http"):
-                                self.log(type_key, "Получена ссылка, скачиваю...")
+                                self.log(type_key, self.t("log_got_link"))
                                 vid_resp = requests.get(content, timeout=120)
                                 if vid_resp.status_code == 200:
                                     filename = f"{save_path}/video_{datetime.now().strftime('%Y%m%d_%H%M%S')}.mp4"
                                     with open(filename, 'wb') as f:
                                         f.write(vid_resp.content)
-                                    self.log(type_key, "Видео сохранено!")
+                                    self.log(type_key, self.t("log_video_saved"))
                                     self.after(0, lambda: self.display_preview("video", filename, is_video=True))
                                 else:
-                                    self.log(type_key, f"Ошибка скачивания: {vid_resp.status_code}")
+                                    self.log(type_key, self.t("log_error_code").format(code=vid_resp.status_code, detail=self.t("error_download")))
                             else:
-                                self.log(type_key, f"Неожиданный ответ: {content[:100]}...")
+                                self.log(type_key, self.t("log_unexpected_response").format(detail=content[:100]))
 
                         self.after(2000, self.update_balance_display)
                     else:
-                        self.log(type_key, f"Ошибка API {response.status_code}: {response.text[:200]}")
+                        self.log(type_key, self.t("log_api_error").format(code=response.status_code, detail=response.text[:200]))
                 except requests.exceptions.Timeout:
-                    self.log(type_key, "Таймаут: сервер не ответил за 3 минуты")
+                    self.log(type_key, self.t("log_timeout_3min"))
                 except Exception as e:
-                    self.log(type_key, f"Ошибка запроса: {e}")
+                    self.log(type_key, self.t("log_error").format(detail=e))
 
             # === ТЕКСТ (POST) ===
             elif type_key == "text":
-                self.log(type_key, f"Запрос LLM ({display_model})...")
+                self.log(type_key, self.t("log_llm_request").format(model=display_model))
                 url_text = "https://gen.pollinations.ai/v1/chat/completions"
                 headers = {"Content-Type": "application/json"}
                 if api_key:
@@ -2022,7 +2093,7 @@ class PollinationsApp(ctk.CTk):
                             content = json_resp['choices'][0]['message']['content']
                         elif 'output' in json_resp:
                             content = json_resp['output']
-                    except:
+                    except (ValueError, KeyError, IndexError):
                         pass
 
                     filename = f"{save_path}/text_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt"
@@ -2031,14 +2102,14 @@ class PollinationsApp(ctk.CTk):
 
                     # Показываем ответ в области превью
                     self.after(0, lambda c=content: self.display_text_preview(type_key, c))
-                    self.log(type_key, f"Готово! Сохранено: {filename}")
+                    self.log(type_key, self.t("log_done_saved").format(filename=filename))
                     self.after(2000, self.update_balance_display)
                 else:
-                    error_text = response.text[:300] if response.text else "Нет данных"
-                    self.log(type_key, f"Ошибка {response.status_code}: {error_text}")
+                    error_text = response.text[:300] if response.text else self.t("log_no_data")
+                    self.log(type_key, self.t("log_error_code").format(code=response.status_code, detail=error_text))
 
         except Exception as e:
-            self.log(type_key, f"Ошибка: {e}")
+            self.log(type_key, self.t("log_error").format(detail=e))
             self.after(0, lambda: self.status_label.configure(text=f"❌ {self.t('generation_error')}", text_color="red"))
             self.after(5000, lambda: self.status_label.configure(text=f"✓ {self.t('ready')}", text_color="gray"))
             print(e)
